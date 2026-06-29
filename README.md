@@ -1,26 +1,32 @@
 # CodeSense Backend
 
-Node.js + Express.js REST API for the CodeSense AI-Driven Code Execution & Learning Analytics Platform.
+Node.js + Express.js REST API server for the CodeSense AI-Driven Code Execution and Learning Analytics Platform.
 
-## What This Does
-- Handles student and educator authentication (JWT + bcryptjs)
-- Receives code submissions and runs pattern-based execution engine
-- Logs every execution to PostgreSQL database
-- Serves ML risk predictions from the FastAPI ML service
-- Returns AI-style error explanations to the frontend
+## Overview
+The backend is the core processing layer of CodeSense. It handles user authentication, receives code submissions from the frontend, forwards them to the Wandbox API for real execution, classifies errors, generates AI-style explanations, and logs all activity to a PostgreSQL database. It also communicates with the FastAPI ML service to retrieve student risk predictions for the educator dashboard.
 
 ## Tech Stack
-- Node.js + Express.js
-- PostgreSQL (pg)
-- JWT + bcryptjs
-- dotenv, cors
+- Node.js + Express.js — REST API and routing
+- PostgreSQL + pg — Relational database and queries
+- JWT + bcryptjs — Authentication and password hashing
+- Wandbox API — Real code execution (Python, Java, C++, JavaScript)
+- dotenv + cors — Environment config and cross-origin support
 
 ## Database Tables
-- users — stores student and educator accounts
-- executions — logs every code submission
-- error_tags — classifies each error as Syntax / Logic / Runtime
-- ml_predictions — stores Random Forest risk scores
-- recommendations — stores personalised practice suggestions
+- users — Student and educator accounts
+- executions — Every code submission and its output
+- errors — Error messages, types, and AI explanations
+- ml_predictions — ML risk scores per student
+- recommendations — Personalised practice suggestions
+
+## API Endpoints
+| Method | Route | Description |
+|--------|-------|-------------|
+| POST | /api/auth/register | Register a new user |
+| POST | /api/auth/login | Login and receive JWT token |
+| POST | /api/execute/run | Submit and execute code |
+| GET | /api/dashboard/student | Student dashboard data |
+| GET | /api/dashboard/educator | Educator dashboard data |
 
 ## How to Run
 ```bash
